@@ -4,7 +4,7 @@ from google import genai
 
 app = Flask(__name__)
 
-# Configuración de la API de Google Gemini
+# Configuración de la API de Google Gemini utilizando la variable de entorno
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 @app.route("/", methods=["GET", "POST"])
@@ -15,7 +15,7 @@ def index():
         if prompt:
             try:
                 response = client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-2.0-flash",
                     contents=prompt
                 )
                 respuesta_ia = response.text
