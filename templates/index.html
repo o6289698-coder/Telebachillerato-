@@ -3,109 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telebachillerato San Javier - Portal con JavI.A.</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Telebachillerato Comunitario San Javier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 5px solid #2e7d32;
+        }
+        h1 {
+            color: #2e7d32;
+            font-size: 24px;
+            text-align: center;
+        }
+        p {
+            color: #555;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1b5e20;
+        }
+        .respuesta-box {
+            margin-top: 20px;
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #2e7d32;
+        }
+        .respuesta-box h3 {
+            margin-top: 0;
+            color: #2e7d32;
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <img src="https://i.imgur.com/81Y7n5L.png" alt="Logotipo Telebachillerato Comunitario" class="logo">
-        <h1>Telebachillerato Comunitario San Javier</h1>
-        <p>Portal de herramientas digitales y asesoría con JavI.A.</p>
-    </header>
 
-    <main class="container">
-        <section class="tools-grid">
-            
-            <!-- TARJETA DESTACADA: JAV-I.A. -->
-            <div class="card card-wide ia-card">
-                <h3>🤖 Asesor Escolar JavI.A.</h3>
-                <p>¿Tienes dudas con una tarea, una fórmula o un resumen? Pregúntale directo a JavI.A.</p>
-                
-                <form action="/procesar" method="POST">
-                    <input type="hidden" name="accion" value="preguntar_ia">
-                    <textarea name="pregunta_ia" placeholder="Ejemplo: Explícame qué es la fotosíntesis..." rows="2" class="text-area" required>{{ pregunta_anterior if pregunta_anterior else '' }}</textarea>
-                    <button type="submit" class="btn btn-ia">Preguntar a JavI.A.</button>
-                </form>
+    <div class="container">
+        <h1>🤖 Asesor Escolar JavI.A.</h1>
+        <p>¿Tienes dudas con una tarea, una fórmula o un resumen? Pregúntale directo a JavI.A.</p>
 
-                {% if respuesta_ia %}
-                <div class="ia-response-box">
-                    <strong>Respuesta de JavI.A.:</strong>
-                    <p>{{ respuesta_ia }}</p>
-                </div>
-                {% endif %}
+        <!-- El formulario envía los datos a la misma ruta mediante POST -->
+        <form method="POST">
+            <textarea name="pregunta" placeholder="Escribe tu duda aquí..." required></textarea>
+            <button type="submit">Preguntar a JavI.A.</button>
+        </form>
+
+        <!-- Bloque que se muestra únicamente cuando la IA responde -->
+        {% if respuesta_ia %}
+            <div class="respuesta-box">
+                <h3>Respuesta de JavI.A.:</h3>
+                <p>{{ respuesta_ia }}</p>
             </div>
+        {% endif %}
+    </div>
 
-            <!-- 1. Comprimir PDF -->
-            <div class="card">
-                <h3>Comprimir PDF</h3>
-                <p>Reduce el peso de tus documentos por debajo de 300 KB para inscripciones.</p>
-                <form action="/procesar" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="accion" value="comprimir_pdf">
-                    <input type="file" name="archivo" accept=".pdf" required>
-                    <button type="submit" class="btn">Procesar PDF</button>
-                </form>
-            </div>
-
-            <!-- 2. PDF a Word / Word a PDF -->
-            <div class="card">
-                <h3>PDF a Word / Word a PDF</h3>
-                <p>Convierte tus formatos de manera limpia para poder editarlos libremente.</p>
-                <form action="/procesar" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="accion" value="convertir_doc">
-                    <input type="file" name="archivo" accept=".pdf,.docx" required>
-                    <button type="submit" class="btn">Convertir</button>
-                </form>
-            </div>
-
-            <!-- 3. Texto a PDF -->
-            <div class="card">
-                <h3>Texto a PDF</h3>
-                <p>Redacta una carta de exposición de motivos o reporte y conviértelo a PDF al instante.</p>
-                <form action="/procesar" method="POST">
-                    <input type="hidden" name="accion" value="texto_a_pdf">
-                    <input type="text" name="titulo_documento" placeholder="Título del documento" class="text-input" required>
-                    <textarea name="contenido_texto" placeholder="Escribe tu texto aquí..." rows="3" class="text-area" required></textarea>
-                    <button type="submit" class="btn">Generar PDF</button>
-                </form>
-            </div>
-
-            <!-- 4. Imágenes a PDF -->
-            <div class="card">
-                <h3>Imágenes a PDF</h3>
-                <p>Agrupa tus fotos escaneadas de actas o credenciales en un solo archivo oficial.</p>
-                <form action="/procesar" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="accion" value="img_a_pdf">
-                    <input type="file" name="archivo" accept="image/*" required>
-                    <button type="submit" class="btn">Crear PDF</button>
-                </form>
-            </div>
-
-            <!-- 5. Conversor de Fotografía -->
-            <div class="card">
-                <h3>Conversor de Fotografía</h3>
-                <p>Transforma formatos de imagen HEIC, PNG o WebP a JPG universal.</p>
-                <form action="/procesar" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="accion" value="convertir_img">
-                    <input type="file" name="archivo" accept="image/*" required>
-                    <button type="submit" class="btn">Cambiar Formato</button>
-                </form>
-            </div>
-
-            <!-- 6. Unir PDFs -->
-            <div class="card">
-                <h3>Unir Varios PDFs</h3>
-                <p>Junta distintos comprobantes o constancias en un solo archivo PDF final.</p>
-                <form action="/procesar" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="accion" value="unir_pdf">
-                    <input type="file" name="archivo" accept=".pdf" multiple required>
-                    <button type="submit" class="btn">Fusionar Archivos</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <p>© 2026 Telebachillerato Comunitario San Javier — Creado con JavI.A. para nuestra comunidad estudiantil.</p>
-    </footer>
 </body>
 </html>
