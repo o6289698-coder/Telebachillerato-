@@ -4,8 +4,8 @@ from google import genai
 
 app = Flask(__name__)
 
-# Configuración de la API de Google Gemini utilizando la variable de entorno
-client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+# Configuración de la API usando directamente la llave nueva
+client = genai.Client(api_key="AQ.Ab8RN6lHQ1MKtGrxq5CPm02Zp6eLijL5t0vbAHtwe9SUWMfJw")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
