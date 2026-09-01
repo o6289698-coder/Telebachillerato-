@@ -4,7 +4,7 @@ from google import genai
 
 app = Flask(__name__)
 
-# Configuración de la API usando directamente la llave nueva
+# Inicialización limpia del cliente con la clave de API explícita
 client = genai.Client(api_key="AQ.Ab8RN6lHQ1MKtGrxq5CPm02Zp6eLijL5t0vbAHtwe9SUWMfJw")
 
 @app.route("/", methods=["GET", "POST"])
@@ -14,6 +14,7 @@ def index():
         prompt = request.form.get("pregunta")
         if prompt:
             try:
+                # Usamos el nombre de modelo compatible con la SDK actual
                 response = client.models.generate_content(
                     model="gemini-2.0-flash",
                     contents=prompt
