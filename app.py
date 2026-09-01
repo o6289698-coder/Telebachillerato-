@@ -32,7 +32,7 @@ def procesar():
             )
             
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
+                model='gemini-3.6-flash',
                 contents=f"{prompt_sistema}\n\nPregunta del alumno: {pregunta_usuario}"
             )
             respuesta_texto = response.text
