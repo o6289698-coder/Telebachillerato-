@@ -1,0 +1,156 @@
+:root {
+    --color-bg: #FFFFFF;
+    --color-verde: #008000;
+    --color-verde-oscuro: #005a00;
+    --color-negro: #111111;
+    --color-gris-claro: #F9F9F9;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-negro);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    text-align: center;
+    padding: 30px 20px;
+    border-bottom: 3px solid var(--color-verde);
+}
+
+.logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.header h1 {
+    color: var(--color-verde);
+    margin: 10px 0 5px 0;
+    font-size: 1.8rem;
+}
+
+.header p {
+    color: var(--color-negro);
+    font-size: 1rem;
+}
+
+.container {
+    flex: 1;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--color-gris-claro);
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: border-color 0.3s;
+}
+
+.card:hover {
+    border-color: var(--color-verde);
+}
+
+.card h3 {
+    color: var(--color-verde);
+    margin-top: 0;
+}
+
+.card p {
+    font-size: 0.85rem;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.card-wide {
+    grid-column: span 1;
+}
+
+@media(min-width: 768px) {
+    .card-wide {
+        grid-column: span 2;
+    }
+}
+
+.ia-card {
+    border: 2px solid var(--color-verde);
+    background: linear-gradient(to bottom, #f0fff0, #F9F9F9);
+}
+
+.ia-response-box {
+    background-color: #ffffff;
+    border-left: 4px solid var(--color-verde);
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.ia-response-box p {
+    margin: 5px 0 0 0;
+    color: #222;
+    white-space: pre-wrap;
+}
+
+input[type="file"], .text-input, .text-area {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    padding: 8px;
+    font-size: 0.85rem;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+}
+
+.text-area {
+    resize: vertical;
+}
+
+.btn {
+    background-color: var(--color-verde);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: var(--color-verde-oscuro);
+}
+
+.btn-ia {
+    background-color: var(--color-negro);
+}
+
+.btn-ia:hover {
+    background-color: var(--color-verde);
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--color-negro);
+    color: white;
+    font-size: 0.85rem;
+    margin-top: auto;
+}
