@@ -1,11 +1,14 @@
 import os
 from flask import Flask, render_template, request
-from google import genai
+import google.generativeai as genai
 
 app = Flask(__name__)
 
-# Inicialización limpia del cliente con la clave de API explícita
-client = genai.Client(api_key="AQ.Ab8RN6lHQ1MKtGrxq5CPm02Zp6eLijL5t0vbAHtwe9SUWMfJw")
+# Configuración con la librería clásica y directa
+genai.configure(api_key="AQ.Ab8RN6lHQ1MKtGrxq5CPm02Zp6eLijL5t0vbAHtwe9SUWMfJw")
+
+# Usamos el modelo estable
+model = genai.GenerativeModel('gemini-2.0-flash')
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -14,11 +17,7 @@ def index():
         prompt = request.form.get("pregunta")
         if prompt:
             try:
-                # Usamos el nombre de modelo compatible con la SDK actual
-                response = client.models.generate_content(
-                    model="gemini-2.0-flash",
-                    contents=prompt
-                )
+                response = model.generate_content(prompt)
                 respuesta_ia = response.text
             except Exception as e:
                 respuesta_ia = f"Error al conectar con JavI.A.: {str(e)}"
